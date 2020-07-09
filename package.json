@@ -12,6 +12,7 @@
     "web-dev": "webpack-dev-server --content-base web/public/ --config web/webpack/web.dev.config.js --port 3001 --inline --hot --colors"
   },
   "dependencies": {
+    "@fluentui/react": "^7.121.10",
     "axios": "^0.19.2",
     "babel": "^6.23.0",
     "babel-polyfill": "^6.26.0",
