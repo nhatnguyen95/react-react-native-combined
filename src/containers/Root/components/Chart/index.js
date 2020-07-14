@@ -2,47 +2,38 @@ import React from 'react';
 import './styles.less';
 
 const data = [
-  40,
-  45,
-  22,
-  10,
-  90,
-  45,
-  22,
-  26,
-  90,
-  45,
-  22,
-  80,
-  90,
-  45,
-  22,
-  40,
-  90,
-  45,
-  72,
-  30,
-  60,
-  45,
+  {value: 40, month: 'Jan'},
+  {value: 45, month: 'Feb'},
+  {value: 22, month: 'Mar'},
+  {value: 10, month: 'Apr'},
+  {value: 90, month: 'May'},
+  {value: 45, month: 'Jun'},
+  {value: 22, month: 'Jul'},
+  {value: 26, month: 'Aug'},
+  {value: 90, month: 'Sep'},
+  {value: 45, month: 'Oct'},
+  {value: 22, month: 'Nov'},
+  {value: 80, month: 'Dec'},
+  {value: 90, month: 'Jan'},
+  {value: 45, month: 'Feb'},
+  {value: 22, month: 'Mar'},
 ];
 
 const Chart = () => {
   const ratio = 2;
   const aspectArray = data.map((i, index) => ({
-    rawValue: i,
-    aspectedValue: i * ratio,
-    color:
-      index < 5 ? '#fff' : index < 15 ? '#118a74' : 'rgba(210,232,250,0.5)',
+    rawValue: i.value,
+    aspectedValue: i.value * ratio,
+    color: index < 4 ? '#fff' : index < 12 ? '#118a74' : 'rgb(210,232,250)',
+    month: i.month,
   }));
-  const maxValue = Math.max.apply(Math, data) * ratio;
+  const maxValue = 100 * ratio;
   return (
     <svg
-      // class="chart"
       className="chart"
       width={'100vmin'}
-      height={maxValue * ratio + 10}
+      height={maxValue * ratio + 80}
       aria-labelledby="title desc"
-      // style="background: grey; display: flex; justify-content: flex-end"
       role="img">
       <title id="title">A bar chart showing information</title>
 
@@ -91,23 +82,73 @@ const Chart = () => {
           <feComposite in2="firstfilter" operator="over" />
         </filter>
       </defs>
+
+      <line
+        x1="5.5vmin"
+        y1={((maxValue * ratio) / 5) * 4}
+        x2="100vmin"
+        y2={((maxValue * ratio) / 5) * 4}
+        class="line"
+      />
+      <text x={0} y={((maxValue * ratio) / 5) * 4 + 5} fill="#cad9e6">
+        200k
+      </text>
+
+      <line
+        x1="5.5vmin"
+        y1={((maxValue * ratio) / 5) * 3}
+        x2="100vmin"
+        y2={((maxValue * ratio) / 5) * 3}
+        class="line"
+      />
+      <text x={0} y={((maxValue * ratio) / 5) * 3 + 5} fill="#cad9e6">
+        400k
+      </text>
+
+      <line
+        x1="5.5vmin"
+        y1={((maxValue * ratio) / 5) * 2}
+        x2="100vmin"
+        y2={((maxValue * ratio) / 5) * 2}
+        class="line"
+      />
+      <text x={0} y={((maxValue * ratio) / 5) * 2 + 5} fill="#cad9e6">
+        600k
+      </text>
+
+      <line
+        x1="5.5vmin"
+        y1={((maxValue * ratio) / 5) * 1}
+        x2="100vmin"
+        y2={((maxValue * ratio) / 5) * 1}
+        class="line"
+      />
+      <text x={0} y={((maxValue * ratio) / 5) * 1 + 5} fill="#cad9e6">
+        800k
+      </text>
       {!aspectArray.length
         ? null
         : aspectArray.map((item, index) => {
             return (
-              <g key={`g - ${index}`} class="bar" style={{fill: item.color}}>
+              <g key={`g - ${index}`} style={{fill: item.color}} class="bar">
                 <rect
-                  width="30"
+                  width="35"
                   height={item.aspectedValue * ratio}
-                  x={index * (30 + 10)}
+                  x={index * 60 + 85}
                   y={(maxValue - item.aspectedValue) * ratio}
                   rx="13"
                   filter={
-                    item.color === 'rgba(210,232,250,0.5)'
+                    item.color === 'rgb(210,232,250)'
                       ? 'url(#innershadow)'
                       : 'url(#shadow)'
                   }
                 />
+                <text
+                  x={index * 60 + 85}
+                  y={maxValue * ratio + 40}
+                  fill={index > 11 ? '#d8e0fb' : '#cad9e6'}>
+                  {item.month}
+                </text>
               </g>
             );
           })}
