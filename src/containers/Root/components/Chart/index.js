@@ -86,6 +86,7 @@ const Chart = () => {
             k3="1"
             result="shadowDiff"
           />
+
           <feComposite in2="shadowDiff" operator="in" />
           <feComposite in2="firstfilter" operator="over" />
         </filter>
